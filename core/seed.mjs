@@ -36,6 +36,7 @@ export function seed() {
   mk('RW-01',parts[1].id,5000,'封装','assembly',{status:'rework',remainingRoute:[step('返工',2),...route()],remainingYield:0.9,enteredAt:'2026-09-23T09:00:00+08:00'}),
  ];
  return {schemaVersion:1,clock:CLOCK,calendar:{weekends:[0,6],holidays:[],label:'mock 五日工作制；真实工厂日历待确认'},customers,projects,parts,dealers,orders,lots,
+  routes:[{id:'R-Q32',steps:[step('封装',3),...route(1)]},{id:'R-S8',steps:[step('封装',2),...route(2)]},{id:'R-Q24',steps:[step('封装',3),...route(2)]},{id:'R-WLCSP',steps:[step('封装',2),...route(3)]}],
   forecasts:[{id:'FC-V2',version:2,active:true,customerId:'C-XM',projectId:'P-PHONE',pn:parts[0].id,month:'2026-10',quantity:160000},{id:'FC-V1',version:1,active:false,customerId:'C-XM',projectId:'P-PHONE',pn:parts[0].id,month:'2026-10',quantity:200000},{id:'FC-BAND',version:1,active:true,customerId:'C-XM',projectId:'P-BAND',pn:parts[1].id,month:'2026-10',quantity:60000}],
   purchaseOrders:lots.filter(l=>l.stage!=='成品库存').map(l=>({id:`PPO-${l.id}`,workOrderId:l.workOrderId,lotId:l.id,supplier:l.factory,kind:l.unit==='wafer'?'晶圆采购':'外协加工',quantity:l.quantity,unit:l.unit})),
   sources:SOURCES.map(s=>({...s,observedAt:CLOCK,ingestedAt:CLOCK,version:1,connector:'mock'})),shipments:[],lineage:[],quarantine:[],issues:[],history:[],feedback:[],runs:[],receipts:[],seen:[],syncIndex:0,

@@ -12,6 +12,7 @@ test('回货转换不重复供给；出货减少未交；签收不二次减订�
  let s=initialState();const before=plan(s).lots.reduce((a,l)=>a+(l.expected||0),0);
  s=act(s,{type:'receipt',lotId:'FT-01',quantity:49000,released:true});assert.equal(plan(s).lots.reduce((a,l)=>a+(l.expected||0),0),before-1000);
  assert.throws(()=>act(s,{type:'receipt',lotId:'FT-01',quantity:49000,released:true}),/不可回货/);
+ assert.equal(plan(s).lots.find(l=>l.id==='FG-FT-01').eta.earliest,'2026-10-01');
  s=act(s,{type:'ship',lotId:'FG-FT-01',orderId:'SO-1001-1',quantity:49000});assert.equal(plan(s).orders.find(o=>o.id==='SO-1001-1').open,51000);
  s=act(s,{type:'delivered',shipmentId:s.shipments[0].id});assert.equal(plan(s).orders.find(o=>o.id==='SO-1001-1').open,51000);
 });

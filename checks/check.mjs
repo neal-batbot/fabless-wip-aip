@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import {seed,assess,lots,tasks} from "../dist/domain.js";
+import {seed,assess,lots,tasks} from "../legacy/domain.js";
 const state=seed();
 let a=assess(state,"SC6820",100000,"2026-09-25");
 assert.deepEqual([a.stock,a.expected,a.gap],[20000,50000,30000]);

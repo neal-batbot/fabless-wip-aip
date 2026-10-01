@@ -33,8 +33,9 @@ function ingest(s,envelope){
    if(r.quantity!==old.quantity||r.stage!==old.stage||r.status!==old.status){reject(r,'数量或工序改变需要可核对的转移/拆并事件');continue;}
    const allowed=['observedAt','promisedDate','promiseConfirmed','remainingRoute'];
    const changed=allowed.some(k=>JSON.stringify(old[k])!==JSON.stringify(r[k]));
+   const before=Object.fromEntries(allowed.map(k=>[k,clone(old[k]??null)]));
    for(const k of allowed)if(r[k]!==undefined)old[k]=clone(r[k]);
-   old.version=(old.version||0)+1;if(changed)audit(s,'来源更新',old.id,{eventId:envelope.eventId,sourceId:source.id});
+   old.version=(old.version||0)+1;if(changed)audit(s,'来源更新',old.id,{eventId:envelope.eventId,sourceId:source.id,version:old.version,before,after:Object.fromEntries(allowed.map(k=>[k,clone(old[k]??null)]))});
   }else if(JSON.stringify(Object.fromEntries(Object.entries(r).filter(([k])=>k!=='entity')))!==JSON.stringify(old)){
    // Order/forecast changes require separate validated business events, never blind object overwrite.
    reject(r,'主数据或订单变更需独立核对，当前版本保留');continue;
@@ -94,7 +95,7 @@ export function transition(input,command){
   ensure(['成品测试','质量放行'].includes(l.stage)&&l.unit==='pcs','必须先完成晶圆/封装路线，才可登记成品回货');
   ensure(command.released===true,'必须提供模拟质量放行确认');
   const id=`FG-${l.id}`;ensure(!s.lots.some(x=>x.id===id),'该批次已回货');
-  const actual=command.quantity;l.status='closed';s.lots.push({...clone(l),id,quantity:actual,unit:'pcs',stage:'成品库存',factory:'中心仓',sourceId:'erp',quality:'released',status:'active',frozen:0,unusable:0,remainingYield:1,remainingRoute:[],enteredAt:s.clock,observedAt:s.clock,reservedOrder:l.reservedOrder,parentId:l.id});
+  const actual=command.quantity;l.status='closed';s.lots.push({...clone(l),id,quantity:actual,unit:'pcs',stage:'成品库存',factory:'中心仓',sourceId:'erp',quality:'released',status:'active',frozen:0,unusable:0,remainingYield:1,remainingRoute:[],promisedDate:null,promiseConfirmed:false,enteredAt:s.clock,observedAt:s.clock,reservedOrder:l.reservedOrder,parentId:l.id});
   s.receipts.push({id:`RC-${s.receipts.length+1}`,lotId:l.id,inventoryId:id,quantity:actual,time:s.clock});s.lineage.push({kind:'回货',parents:[l.id],children:[id],quantity:actual,unit:'pcs',time:s.clock});audit(s,'实际回货',l.id,{inventoryId:id,quantity:actual});result={inventoryId:id};break;
  }
  case 'ship':{
@@ -118,7 +119,8 @@ export function transition(input,command){
  case 'transfer':{const l=find(command.lotId);ensure(l.status==='active'&&l.stage==='封装','仅模拟封装完成转测试');l.stage='成品测试';l.factory='启明测试';l.sourceId='test';l.enteredAt=s.clock;l.remainingRoute=l.remainingRoute.filter(x=>x.name!=='封装');audit(s,'跨厂流转',l.id,{to:l.factory});break;}
  case 'release':{
   const l=find(command.lotId);const part=s.parts.find(x=>x.id===command.pn);ensure(l.stage==='Die 库存'&&l.status==='active'&&l.unit==='die'&&l.quality!=='hold','仅可对可用Die库存投料');ensure(part&&part.die===l.die&&l.compatiblePns.includes(part.id),'PN与Die或路线不兼容');ensure(positive(command.quantity)&&command.quantity<=l.quantity-l.frozen-l.unusable,'投料数量不足');
-  const id=`REL-${s.lineage.length+1}`;l.quantity-=command.quantity;s.lots.push({...clone(l),id,pn:part.id,quantity:command.quantity,unit:'pcs',stage:'封装',sourceId:'assembly',factory:'华成封装',parentId:l.id,enteredAt:s.clock,workOrderId:`WO-${id}`,routeId:part.routeId});s.purchaseOrders.push({id:`PPO-${id}`,workOrderId:`WO-${id}`,lotId:id,supplier:'华成封装',kind:'模拟加工投料',quantity:command.quantity,unit:'die'});s.lineage.push({kind:'投料',parents:[l.id],children:[id],quantity:command.quantity,unit:'die',pn:part.id,time:s.clock});audit(s,'模拟投料',l.id,{child:id,pn:part.id,quantity:command.quantity});result={lotId:id};break;
+  const master=(s.routes||seed().routes).find(r=>r.id===part.routeId);ensure(master,'加工路线缺失');
+  const id=`REL-${s.lineage.length+1}`;l.quantity-=command.quantity;s.lots.push({...clone(l),id,pn:part.id,quantity:command.quantity,unit:'pcs',stage:'封装',sourceId:'assembly',factory:'华成封装',parentId:l.id,enteredAt:s.clock,workOrderId:`WO-${id}`,routeId:part.routeId,remainingRoute:clone(master.steps),promisedDate:null,promiseConfirmed:false});s.purchaseOrders.push({id:`PPO-${id}`,workOrderId:`WO-${id}`,lotId:id,supplier:'华成封装',kind:'模拟加工投料',quantity:command.quantity,unit:'die'});s.lineage.push({kind:'投料',parents:[l.id],children:[id],quantity:command.quantity,unit:'die',pn:part.id,time:s.clock});audit(s,'模拟投料',l.id,{child:id,pn:part.id,quantity:command.quantity});result={lotId:id};break;
  }
  case 'followup':{const x=s.issues.find(x=>x.id===command.issueId);ensure(x,'异常不存在');ensure(typeof command.note==='string'&&command.note.trim().length>0&&command.note.length<=1000,'请填写1–1000字反馈');ensure(Number.isFinite(Date.parse(command.nextCheck)),'复核时间无效');x.notes.push({time:s.clock,note:command.note});x.nextCheck=command.nextCheck;x.status='following';audit(s,'异常跟进',x.id,{note:command.note,nextCheck:x.nextCheck});break;}
  case 'agent_review':{
