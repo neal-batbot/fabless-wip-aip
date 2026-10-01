@@ -1,0 +1,4 @@
+lot_no,part_number,qty,uom,operation,factory,source_updated_at,promise_date,quality,work_order
+"WF-01","","12","wafer","晶圆制造","远景晶圆周报","2026-10-01T09:00:00+08:00","2026-10-28","pending","WO-WF-01"
+"CP-01","","4","wafer","晶圆测试","远景晶圆周报","2026-10-01T09:00:00+08:00","2026-10-07","pending","WO-CP-01"
+"DIE-01","","60000","die","Die 库存","远景晶圆周报","2026-10-01T09:00:00+08:00","2026-10-07","pending","WO-DIE-01"

@@ -1,0 +1,84 @@
+{
+  "sourceId": "crm",
+  "eventId": "crm:normal:1",
+  "observedAt": "2026-10-01T09:00:00+08:00",
+  "version": 2,
+  "records": [
+    {
+      "entity": "customer",
+      "id": "C-XM",
+      "name": "小米（mock）"
+    },
+    {
+      "entity": "customer",
+      "id": "C-BC",
+      "name": "北辰电子（mock）"
+    },
+    {
+      "entity": "customer",
+      "id": "C-QH",
+      "name": "青禾智能（mock）"
+    },
+    {
+      "entity": "project",
+      "id": "P-PHONE",
+      "customerId": "C-XM",
+      "name": "手机电源平台",
+      "stage": "量产爬坡"
+    },
+    {
+      "entity": "project",
+      "id": "P-BAND",
+      "customerId": "C-XM",
+      "name": "手环充电平台",
+      "stage": "量产"
+    },
+    {
+      "entity": "project",
+      "id": "P-AUDIO",
+      "customerId": "C-BC",
+      "name": "桌面音箱",
+      "stage": "量产"
+    },
+    {
+      "entity": "project",
+      "id": "P-SENSOR",
+      "customerId": "C-QH",
+      "name": "环境传感器",
+      "stage": "试产"
+    },
+    {
+      "entity": "forecast",
+      "id": "FC-V2",
+      "version": 2,
+      "active": true,
+      "customerId": "C-XM",
+      "projectId": "P-PHONE",
+      "pn": "SC6820-Q32-TR",
+      "month": "2026-10",
+      "quantity": 160000
+    },
+    {
+      "entity": "forecast",
+      "id": "FC-V1",
+      "version": 1,
+      "active": false,
+      "customerId": "C-XM",
+      "projectId": "P-PHONE",
+      "pn": "SC6820-Q32-TR",
+      "month": "2026-10",
+      "quantity": 200000
+    },
+    {
+      "entity": "forecast",
+      "id": "FC-BAND",
+      "version": 1,
+      "active": true,
+      "customerId": "C-XM",
+      "projectId": "P-BAND",
+      "pn": "SC6820-S8-TR",
+      "month": "2026-10",
+      "quantity": 60000
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+import assets from '../.sites-runtime/assets.mjs';import {api} from './api.mjs';
+export default {async fetch(request,env){const url=new URL(request.url);if(url.pathname.startsWith('/api/'))return api(request,env.DB,{apiKey:env.TYPESAFE_API_KEY});const a=assets[url.pathname];if(!a)return new Response('Not found',{status:404});return new Response(a.body,{headers:{'Content-Type':a.type,'Cache-Control':'no-cache','X-Content-Type-Options':'nosniff'}});}};

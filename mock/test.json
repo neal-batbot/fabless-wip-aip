@@ -1,0 +1,241 @@
+{
+  "sourceId": "test",
+  "eventId": "test:normal:1",
+  "observedAt": "2026-10-01T09:00:00+08:00",
+  "version": 2,
+  "records": [
+    {
+      "entity": "lot",
+      "id": "FT-01",
+      "pn": "SC6820-Q32-TR",
+      "die": "D6820",
+      "quantity": 50000,
+      "unit": "pcs",
+      "stage": "成品测试",
+      "sourceId": "test",
+      "factory": "启明测试",
+      "quality": "pending",
+      "frozen": 0,
+      "unusable": 0,
+      "status": "active",
+      "remainingYield": 1,
+      "remainingRoute": [
+        {
+          "name": "成品测试",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "质量放行",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "运输",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        }
+      ],
+      "promisedDate": "2026-10-07",
+      "promiseConfirmed": false,
+      "observedAt": "2026-10-01T09:00:00+08:00",
+      "enteredAt": "2026-09-30T09:00:00+08:00",
+      "maxDwellHours": 96,
+      "owner": "林浩",
+      "version": 1,
+      "workOrderId": "WO-FT-01",
+      "sourceRecord": "FT-01",
+      "reservedOrder": "SO-1001-1",
+      "resource": "ATE-A"
+    },
+    {
+      "entity": "lot",
+      "id": "FT-02",
+      "pn": "SC3215-Q24-TR",
+      "die": "D3215",
+      "quantity": 20000,
+      "unit": "pcs",
+      "stage": "成品测试",
+      "sourceId": "test",
+      "factory": "启明测试",
+      "quality": "pending",
+      "frozen": 0,
+      "unusable": 0,
+      "status": "active",
+      "remainingYield": 1,
+      "remainingRoute": [
+        {
+          "name": "成品测试",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "质量放行",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "运输",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        }
+      ],
+      "promisedDate": "2026-10-07",
+      "promiseConfirmed": false,
+      "observedAt": "2026-10-01T09:00:00+08:00",
+      "enteredAt": "2026-09-30T09:00:00+08:00",
+      "maxDwellHours": 96,
+      "owner": "林浩",
+      "version": 1,
+      "workOrderId": "WO-FT-02",
+      "sourceRecord": "FT-02",
+      "reservedOrder": "SO-1002-1",
+      "resource": "ATE-A"
+    },
+    {
+      "entity": "lot",
+      "id": "FG-02",
+      "pn": "SC9102-WLCSP-TR",
+      "die": "D9102",
+      "quantity": 8000,
+      "unit": "pcs",
+      "stage": "成品库存",
+      "sourceId": "test",
+      "factory": "启明测试",
+      "quality": "released",
+      "frozen": 0,
+      "unusable": 0,
+      "status": "active",
+      "remainingYield": 1,
+      "remainingRoute": [
+        {
+          "name": "直发运输",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        }
+      ],
+      "promisedDate": "2026-10-07",
+      "promiseConfirmed": false,
+      "observedAt": "2026-10-01T09:00:00+08:00",
+      "enteredAt": "2026-09-30T09:00:00+08:00",
+      "maxDwellHours": 96,
+      "owner": "林浩",
+      "version": 1,
+      "workOrderId": "WO-FG-02",
+      "sourceRecord": "FG-02",
+      "reservedOrder": "SO-1004-1"
+    },
+    {
+      "entity": "lot",
+      "id": "HOLD-01",
+      "pn": "SC3215-Q24-TR",
+      "die": "D3215",
+      "quantity": 10000,
+      "unit": "pcs",
+      "stage": "成品测试",
+      "sourceId": "test",
+      "factory": "启明测试",
+      "quality": "hold",
+      "frozen": 10000,
+      "unusable": 0,
+      "status": "active",
+      "remainingYield": 1,
+      "remainingRoute": [
+        {
+          "name": "成品测试",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "质量放行",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "运输",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        }
+      ],
+      "promisedDate": "2026-10-07",
+      "promiseConfirmed": false,
+      "observedAt": "2026-10-01T09:00:00+08:00",
+      "enteredAt": "2026-09-24T09:00:00+08:00",
+      "maxDwellHours": 96,
+      "owner": "林浩",
+      "version": 1,
+      "workOrderId": "WO-HOLD-01",
+      "sourceRecord": "HOLD-01"
+    }
+  ]
+}

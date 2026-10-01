@@ -1,0 +1,951 @@
+{
+  "crm": {
+    "sourceId": "crm",
+    "eventId": "crm:normal:1",
+    "observedAt": "2026-10-01T09:00:00+08:00",
+    "version": 2,
+    "records": [
+      {
+        "entity": "customer",
+        "id": "C-XM",
+        "name": "小米（mock）"
+      },
+      {
+        "entity": "customer",
+        "id": "C-BC",
+        "name": "北辰电子（mock）"
+      },
+      {
+        "entity": "customer",
+        "id": "C-QH",
+        "name": "青禾智能（mock）"
+      },
+      {
+        "entity": "project",
+        "id": "P-PHONE",
+        "customerId": "C-XM",
+        "name": "手机电源平台",
+        "stage": "量产爬坡"
+      },
+      {
+        "entity": "project",
+        "id": "P-BAND",
+        "customerId": "C-XM",
+        "name": "手环充电平台",
+        "stage": "量产"
+      },
+      {
+        "entity": "project",
+        "id": "P-AUDIO",
+        "customerId": "C-BC",
+        "name": "桌面音箱",
+        "stage": "量产"
+      },
+      {
+        "entity": "project",
+        "id": "P-SENSOR",
+        "customerId": "C-QH",
+        "name": "环境传感器",
+        "stage": "试产"
+      },
+      {
+        "entity": "forecast",
+        "id": "FC-V2",
+        "version": 2,
+        "active": true,
+        "customerId": "C-XM",
+        "projectId": "P-PHONE",
+        "pn": "SC6820-Q32-TR",
+        "month": "2026-10",
+        "quantity": 160000
+      },
+      {
+        "entity": "forecast",
+        "id": "FC-V1",
+        "version": 1,
+        "active": false,
+        "customerId": "C-XM",
+        "projectId": "P-PHONE",
+        "pn": "SC6820-Q32-TR",
+        "month": "2026-10",
+        "quantity": 200000
+      },
+      {
+        "entity": "forecast",
+        "id": "FC-BAND",
+        "version": 1,
+        "active": true,
+        "customerId": "C-XM",
+        "projectId": "P-BAND",
+        "pn": "SC6820-S8-TR",
+        "month": "2026-10",
+        "quantity": 60000
+      }
+    ]
+  },
+  "erp": {
+    "sourceId": "erp",
+    "eventId": "erp:normal:1",
+    "observedAt": "2026-10-01T09:00:00+08:00",
+    "version": 2,
+    "records": [
+      {
+        "entity": "order",
+        "id": "SO-1001-1",
+        "customerId": "C-XM",
+        "projectId": "P-PHONE",
+        "pn": "SC6820-Q32-TR",
+        "customerPo": "CPO-XM-1001",
+        "dealerId": "D-A",
+        "quantity": 100000,
+        "cancelled": 0,
+        "due": "2026-10-07",
+        "demandMonth": "2026-10",
+        "priority": 1,
+        "owner": "陈悦",
+        "allowPartial": true
+      },
+      {
+        "entity": "order",
+        "id": "SO-1002-1",
+        "customerId": "C-BC",
+        "projectId": "P-AUDIO",
+        "pn": "SC3215-Q24-TR",
+        "customerPo": "CPO-BC-1002",
+        "dealerId": "D-B",
+        "quantity": 20000,
+        "cancelled": 0,
+        "due": "2026-10-07",
+        "demandMonth": "2026-10",
+        "priority": 2,
+        "owner": "林浩",
+        "allowPartial": true
+      },
+      {
+        "entity": "order",
+        "id": "SO-1003-1",
+        "customerId": "C-XM",
+        "projectId": "P-BAND",
+        "pn": "SC6820-S8-TR",
+        "customerPo": "CPO-XM-1003",
+        "dealerId": "D-A",
+        "quantity": 40000,
+        "cancelled": 0,
+        "due": "2026-10-16",
+        "demandMonth": "2026-10",
+        "priority": 3,
+        "owner": "周宁",
+        "allowPartial": false
+      },
+      {
+        "entity": "order",
+        "id": "SO-1004-1",
+        "customerId": "C-QH",
+        "projectId": "P-SENSOR",
+        "pn": "SC9102-WLCSP-TR",
+        "customerPo": "CPO-QH-1004",
+        "dealerId": "D-B",
+        "quantity": 8000,
+        "cancelled": 0,
+        "due": "2026-10-08",
+        "demandMonth": "2026-10",
+        "priority": 4,
+        "owner": "王蕾",
+        "allowPartial": true
+      },
+      {
+        "entity": "lot",
+        "id": "FG-01",
+        "pn": "SC6820-Q32-TR",
+        "die": "D6820",
+        "quantity": 20000,
+        "unit": "pcs",
+        "stage": "成品库存",
+        "sourceId": "erp",
+        "factory": "中心仓",
+        "quality": "released",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 1,
+        "remainingRoute": [],
+        "promisedDate": "2026-10-07",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-30T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-FG-01",
+        "sourceRecord": "FG-01",
+        "reservedOrder": "SO-1001-1"
+      }
+    ]
+  },
+  "foundry": {
+    "sourceId": "foundry",
+    "eventId": "foundry:normal:1",
+    "observedAt": "2026-10-01T09:00:00+08:00",
+    "version": 2,
+    "records": [
+      {
+        "entity": "lot",
+        "id": "WF-01",
+        "pn": null,
+        "die": "D6820",
+        "quantity": 12,
+        "unit": "wafer",
+        "stage": "晶圆制造",
+        "sourceId": "foundry",
+        "factory": "远景晶圆周报",
+        "quality": "pending",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 0.85,
+        "remainingRoute": [
+          {
+            "name": "晶圆制造",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              8,
+              8
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "晶圆测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              2,
+              2
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "封装",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              3,
+              3
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "成品测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              2,
+              2
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "质量放行",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-28",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-30T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-WF-01",
+        "sourceRecord": "WF-01",
+        "grossDiePerWafer": 6000,
+        "compatiblePns": [
+          "SC6820-Q32-TR",
+          "SC6820-S8-TR"
+        ]
+      },
+      {
+        "entity": "lot",
+        "id": "CP-01",
+        "pn": null,
+        "die": "D6820",
+        "quantity": 4,
+        "unit": "wafer",
+        "stage": "晶圆测试",
+        "sourceId": "foundry",
+        "factory": "远景晶圆周报",
+        "quality": "pending",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 0.9,
+        "remainingRoute": [
+          {
+            "name": "晶圆测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              2,
+              2
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "封装",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              3,
+              3
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "成品测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "质量放行",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-07",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-30T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-CP-01",
+        "sourceRecord": "CP-01",
+        "grossDiePerWafer": 6000,
+        "compatiblePns": [
+          "SC6820-Q32-TR",
+          "SC6820-S8-TR"
+        ]
+      },
+      {
+        "entity": "lot",
+        "id": "DIE-01",
+        "pn": null,
+        "die": "D6820",
+        "quantity": 60000,
+        "unit": "die",
+        "stage": "Die 库存",
+        "sourceId": "foundry",
+        "factory": "远景晶圆周报",
+        "quality": "pending",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 0.98,
+        "remainingRoute": [
+          {
+            "name": "封装",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              3,
+              3
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "成品测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "质量放行",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-07",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-30T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-DIE-01",
+        "sourceRecord": "DIE-01",
+        "compatiblePns": [
+          "SC6820-Q32-TR",
+          "SC6820-S8-TR"
+        ]
+      }
+    ]
+  },
+  "assembly": {
+    "sourceId": "assembly",
+    "eventId": "assembly:normal:1",
+    "observedAt": "2026-10-01T09:00:00+08:00",
+    "version": 2,
+    "records": [
+      {
+        "entity": "lot",
+        "id": "AS-01",
+        "pn": "SC6820-Q32-TR",
+        "die": "D6820",
+        "quantity": 30000,
+        "unit": "pcs",
+        "stage": "封装",
+        "sourceId": "assembly",
+        "factory": "华成封装",
+        "quality": "pending",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 1,
+        "remainingRoute": [
+          {
+            "name": "封装",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              2,
+              2
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "成品测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "质量放行",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-09",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-30T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-AS-01",
+        "sourceRecord": "AS-01",
+        "reservedOrder": "SO-1001-1",
+        "resource": "ATE-A"
+      },
+      {
+        "entity": "lot",
+        "id": "AS-02",
+        "pn": "SC6820-S8-TR",
+        "die": "D6820",
+        "quantity": 18000,
+        "unit": "pcs",
+        "stage": "封装",
+        "sourceId": "assembly",
+        "factory": "华成封装",
+        "quality": "pending",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 0.98,
+        "remainingRoute": [
+          {
+            "name": "封装",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              2,
+              2
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "成品测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              2,
+              2
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "质量放行",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-07",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-30T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-AS-02",
+        "sourceRecord": "AS-02"
+      },
+      {
+        "entity": "lot",
+        "id": "RW-01",
+        "pn": "SC6820-S8-TR",
+        "die": "D6820",
+        "quantity": 5000,
+        "unit": "pcs",
+        "stage": "封装",
+        "sourceId": "assembly",
+        "factory": "华成封装",
+        "quality": "pending",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "rework",
+        "remainingYield": 0.9,
+        "remainingRoute": [
+          {
+            "name": "返工",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              2,
+              2
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "成品测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "质量放行",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-07",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-23T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-RW-01",
+        "sourceRecord": "RW-01"
+      }
+    ]
+  },
+  "test": {
+    "sourceId": "test",
+    "eventId": "test:normal:1",
+    "observedAt": "2026-10-01T09:00:00+08:00",
+    "version": 2,
+    "records": [
+      {
+        "entity": "lot",
+        "id": "FT-01",
+        "pn": "SC6820-Q32-TR",
+        "die": "D6820",
+        "quantity": 50000,
+        "unit": "pcs",
+        "stage": "成品测试",
+        "sourceId": "test",
+        "factory": "启明测试",
+        "quality": "pending",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 1,
+        "remainingRoute": [
+          {
+            "name": "成品测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "质量放行",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-07",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-30T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-FT-01",
+        "sourceRecord": "FT-01",
+        "reservedOrder": "SO-1001-1",
+        "resource": "ATE-A"
+      },
+      {
+        "entity": "lot",
+        "id": "FT-02",
+        "pn": "SC3215-Q24-TR",
+        "die": "D3215",
+        "quantity": 20000,
+        "unit": "pcs",
+        "stage": "成品测试",
+        "sourceId": "test",
+        "factory": "启明测试",
+        "quality": "pending",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 1,
+        "remainingRoute": [
+          {
+            "name": "成品测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "质量放行",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-07",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-30T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-FT-02",
+        "sourceRecord": "FT-02",
+        "reservedOrder": "SO-1002-1",
+        "resource": "ATE-A"
+      },
+      {
+        "entity": "lot",
+        "id": "FG-02",
+        "pn": "SC9102-WLCSP-TR",
+        "die": "D9102",
+        "quantity": 8000,
+        "unit": "pcs",
+        "stage": "成品库存",
+        "sourceId": "test",
+        "factory": "启明测试",
+        "quality": "released",
+        "frozen": 0,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 1,
+        "remainingRoute": [
+          {
+            "name": "直发运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-07",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-30T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-FG-02",
+        "sourceRecord": "FG-02",
+        "reservedOrder": "SO-1004-1"
+      },
+      {
+        "entity": "lot",
+        "id": "HOLD-01",
+        "pn": "SC3215-Q24-TR",
+        "die": "D3215",
+        "quantity": 10000,
+        "unit": "pcs",
+        "stage": "成品测试",
+        "sourceId": "test",
+        "factory": "启明测试",
+        "quality": "hold",
+        "frozen": 10000,
+        "unusable": 0,
+        "status": "active",
+        "remainingYield": 1,
+        "remainingRoute": [
+          {
+            "name": "成品测试",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "质量放行",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          },
+          {
+            "name": "运输",
+            "queue": [
+              0,
+              0
+            ],
+            "duration": [
+              1,
+              1
+            ],
+            "confirmedStart": "2026-10-01"
+          }
+        ],
+        "promisedDate": "2026-10-07",
+        "promiseConfirmed": false,
+        "observedAt": "2026-10-01T09:00:00+08:00",
+        "enteredAt": "2026-09-24T09:00:00+08:00",
+        "maxDwellHours": 96,
+        "owner": "林浩",
+        "version": 1,
+        "workOrderId": "WO-HOLD-01",
+        "sourceRecord": "HOLD-01"
+      }
+    ]
+  },
+  "manual": {
+    "sourceId": "manual",
+    "eventId": "manual:normal:1",
+    "observedAt": "2026-10-01T09:00:00+08:00",
+    "version": 2,
+    "records": []
+  }
+}

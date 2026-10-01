@@ -1,0 +1,5 @@
+lot_no,part_number,qty,uom,operation,factory,source_updated_at,promise_date,quality,work_order
+"FT-01","SC6820-Q32-TR","50000","pcs","成品测试","启明测试","2026-10-01T09:00:00+08:00","2026-10-07","pending","WO-FT-01"
+"FT-02","SC3215-Q24-TR","20000","pcs","成品测试","启明测试","2026-10-01T09:00:00+08:00","2026-10-07","pending","WO-FT-02"
+"FG-02","SC9102-WLCSP-TR","8000","pcs","成品库存","启明测试","2026-10-01T09:00:00+08:00","2026-10-07","released","WO-FG-02"
+"HOLD-01","SC3215-Q24-TR","10000","pcs","成品测试","启明测试","2026-10-01T09:00:00+08:00","2026-10-07","hold","WO-HOLD-01"

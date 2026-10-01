@@ -1,0 +1,13 @@
+{
+  "name": "seqchip-wip-workbench",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test checks/*.test.mjs",
+    "db:generate": "drizzle-kit generate",
+    "dev": "node scripts/dev.mjs"
+  },
+  "dependencies": {"drizzle-orm": "^0.44.5"},
+  "devDependencies": {"drizzle-kit": "^0.31.4", "esbuild": "^0.25.10"}
+}

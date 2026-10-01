@@ -1,0 +1,283 @@
+{
+  "sourceId": "foundry",
+  "eventId": "foundry:normal:1",
+  "observedAt": "2026-10-01T09:00:00+08:00",
+  "version": 2,
+  "records": [
+    {
+      "entity": "lot",
+      "id": "WF-01",
+      "pn": null,
+      "die": "D6820",
+      "quantity": 12,
+      "unit": "wafer",
+      "stage": "晶圆制造",
+      "sourceId": "foundry",
+      "factory": "远景晶圆周报",
+      "quality": "pending",
+      "frozen": 0,
+      "unusable": 0,
+      "status": "active",
+      "remainingYield": 0.85,
+      "remainingRoute": [
+        {
+          "name": "晶圆制造",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            8,
+            8
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "晶圆测试",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            2,
+            2
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "封装",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            3,
+            3
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "成品测试",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            2,
+            2
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "质量放行",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "运输",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        }
+      ],
+      "promisedDate": "2026-10-28",
+      "promiseConfirmed": false,
+      "observedAt": "2026-10-01T09:00:00+08:00",
+      "enteredAt": "2026-09-30T09:00:00+08:00",
+      "maxDwellHours": 96,
+      "owner": "林浩",
+      "version": 1,
+      "workOrderId": "WO-WF-01",
+      "sourceRecord": "WF-01",
+      "grossDiePerWafer": 6000,
+      "compatiblePns": [
+        "SC6820-Q32-TR",
+        "SC6820-S8-TR"
+      ]
+    },
+    {
+      "entity": "lot",
+      "id": "CP-01",
+      "pn": null,
+      "die": "D6820",
+      "quantity": 4,
+      "unit": "wafer",
+      "stage": "晶圆测试",
+      "sourceId": "foundry",
+      "factory": "远景晶圆周报",
+      "quality": "pending",
+      "frozen": 0,
+      "unusable": 0,
+      "status": "active",
+      "remainingYield": 0.9,
+      "remainingRoute": [
+        {
+          "name": "晶圆测试",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            2,
+            2
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "封装",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            3,
+            3
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "成品测试",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "质量放行",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "运输",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        }
+      ],
+      "promisedDate": "2026-10-07",
+      "promiseConfirmed": false,
+      "observedAt": "2026-10-01T09:00:00+08:00",
+      "enteredAt": "2026-09-30T09:00:00+08:00",
+      "maxDwellHours": 96,
+      "owner": "林浩",
+      "version": 1,
+      "workOrderId": "WO-CP-01",
+      "sourceRecord": "CP-01",
+      "grossDiePerWafer": 6000,
+      "compatiblePns": [
+        "SC6820-Q32-TR",
+        "SC6820-S8-TR"
+      ]
+    },
+    {
+      "entity": "lot",
+      "id": "DIE-01",
+      "pn": null,
+      "die": "D6820",
+      "quantity": 60000,
+      "unit": "die",
+      "stage": "Die 库存",
+      "sourceId": "foundry",
+      "factory": "远景晶圆周报",
+      "quality": "pending",
+      "frozen": 0,
+      "unusable": 0,
+      "status": "active",
+      "remainingYield": 0.98,
+      "remainingRoute": [
+        {
+          "name": "封装",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            3,
+            3
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "成品测试",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "质量放行",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        },
+        {
+          "name": "运输",
+          "queue": [
+            0,
+            0
+          ],
+          "duration": [
+            1,
+            1
+          ],
+          "confirmedStart": "2026-10-01"
+        }
+      ],
+      "promisedDate": "2026-10-07",
+      "promiseConfirmed": false,
+      "observedAt": "2026-10-01T09:00:00+08:00",
+      "enteredAt": "2026-09-30T09:00:00+08:00",
+      "maxDwellHours": 96,
+      "owner": "林浩",
+      "version": 1,
+      "workOrderId": "WO-DIE-01",
+      "sourceRecord": "DIE-01",
+      "compatiblePns": [
+        "SC6820-Q32-TR",
+        "SC6820-S8-TR"
+      ]
+    }
+  ]
+}

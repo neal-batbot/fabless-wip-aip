@@ -1,0 +1,4 @@
+lot_no,part_number,qty,uom,operation,factory,source_updated_at,promise_date,quality,work_order
+"AS-01","SC6820-Q32-TR","30000","pcs","封装","华成封装","2026-10-01T09:00:00+08:00","2026-10-09","pending","WO-AS-01"
+"AS-02","SC6820-S8-TR","18000","pcs","封装","华成封装","2026-10-01T09:00:00+08:00","2026-10-07","pending","WO-AS-02"
+"RW-01","SC6820-S8-TR","5000","pcs","封装","华成封装","2026-10-01T09:00:00+08:00","2026-10-07","pending","WO-RW-01"
