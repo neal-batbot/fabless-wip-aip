@@ -31,6 +31,11 @@ test('共享Die投料扣减一次；错误PN拒绝',()=>{
  let s=initialState();assert.throws(()=>act(s,{type:'release',lotId:'DIE-01',pn:'SC3215-Q24-TR',quantity:10000}),/不兼容/);
  s=act(s,{type:'release',lotId:'DIE-01',pn:'SC6820-S8-TR',quantity:10000});assert.equal(s.lots.find(l=>l.id==='DIE-01').quantity,50000);assert.equal(s.lots.at(-1).quantity,10000);assert.equal(s.lots.at(-1).pn,'SC6820-S8-TR');
 });
+test('晶圆投产→CP→实测Die→PN投料：单位转换不保留重复供给',()=>{
+ let s=initialState();s=act(s,{type:'wafer_start',pn:'SC6820-S8-TR',wafers:2});const id=s.lots.at(-1).id;
+ s=act(s,{type:'wafer_test',lotId:id});s=act(s,{type:'die_receipt',lotId:id,quantity:11000,released:true});assert.equal(plan(s).lots.find(l=>l.id===id).expected,0);
+ const die=s.lots.at(-1);assert.equal(die.unit,'die');assert.equal(die.quantity,11000);s=act(s,{type:'release',lotId:die.id,pn:'SC6820-S8-TR',quantity:9000});assert.equal(s.lots.find(l=>l.id===die.id).quantity,2000);assert.equal(s.lots.at(-1).routeId,'R-S8');
+});
 test('调度日期可配置，同一日多次tick只执行一次，月采购准确触发',()=>{
  let s=initialState();s=act(s,{type:'tick'});assert.equal(s.runs.length,1);s=act(s,{type:'tick'});assert.equal(s.runs.length,1);
  s=act(s,{type:'tick',at:'2026-10-05T10:00:00+08:00'});assert.ok(s.runs.find(r=>r.key==='schedule:wafer:2026-10-05'));assert.ok(s.runs.find(r=>r.key==='schedule:weekly:2026-10-05'));

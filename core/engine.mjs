@@ -117,6 +117,19 @@ export function transition(input,command){
  case 'pause':{const l=find(command.lotId);ensure(l.status==='active'||l.status==='paused','当前状态不可切换暂停');l.status=l.status==='paused'?'active':'paused';audit(s,'暂停/恢复',l.id,{status:l.status});break;}
  case 'rework':{const l=find(command.lotId);ensure(l.status==='active'&&l.quality!=='hold'&&l.unit==='pcs'&&['封装','成品测试'].includes(l.stage),'仅可对未冻结封装/测试批次登记返工');l.status='rework';l.remainingRoute.unshift({name:'返工复测',queue:[0,1],duration:[1,2]});audit(s,'返工',l.id,{route:l.remainingRoute});break;}
  case 'transfer':{const l=find(command.lotId);ensure(l.status==='active'&&l.stage==='封装','仅模拟封装完成转测试');l.stage='成品测试';l.factory='启明测试';l.sourceId='test';l.enteredAt=s.clock;l.remainingRoute=l.remainingRoute.filter(x=>x.name!=='封装');audit(s,'跨厂流转',l.id,{to:l.factory});break;}
+ case 'wafer_start':{
+  const part=s.parts.find(p=>p.id===command.pn);ensure(part,'需选择已有PN对应的Die');ensure(positive(command.wafers)&&command.wafers<=1000,'晶圆片数需为1–1000');
+  const template=s.lots.find(l=>l.die===part.die&&l.unit==='wafer'&&l.grossDiePerWafer);ensure(template,'该Die尚无经过确认的片数换算主数据');
+  const id=`WF-NEW-${s.purchaseOrders.length+1}`;const routeMaster=(s.routes||seed().routes).find(r=>r.id===part.routeId);ensure(routeMaster,'路线缺失');
+  s.lots.push({...clone(template),id,pn:null,quantity:command.wafers,stage:'晶圆制造',status:'active',quality:'pending',frozen:0,unusable:0,enteredAt:s.clock,observedAt:s.clock,workOrderId:`WO-${id}`,remainingRoute:[{name:'晶圆制造',queue:[0,2],duration:[8,12]},{name:'晶圆测试',queue:[0,1],duration:[2,3]},...clone(routeMaster.steps)],promiseConfirmed:false,promisedDate:null,compatiblePns:s.parts.filter(p=>p.die===part.die).map(p=>p.id)});
+  s.purchaseOrders.push({id:`PPO-${id}`,workOrderId:`WO-${id}`,lotId:id,supplier:template.factory,kind:'模拟晶圆投产',quantity:command.wafers,unit:'wafer'});audit(s,'模拟晶圆投产',id,{wafers:command.wafers,die:part.die});result={lotId:id};break;
+ }
+ case 'wafer_test':{const l=find(command.lotId);ensure(l.status==='active'&&l.stage==='晶圆制造','仅晶圆制造批次可转晶圆测试');l.stage='晶圆测试';l.enteredAt=s.clock;l.remainingRoute=l.remainingRoute.filter(r=>r.name!=='晶圆制造');audit(s,'晶圆完工转测试',l.id,{quantity:l.quantity,unit:l.unit});break;}
+ case 'die_receipt':{
+  const l=find(command.lotId);ensure(l.status==='active'&&l.stage==='晶圆测试'&&l.unit==='wafer'&&l.quality!=='hold','需未冻结的晶圆测试批次');ensure(command.released===true&&positive(command.quantity)&&command.quantity<=l.quantity*l.grossDiePerWafer,'需确认CP良品放行，数量不可超过gross Die');
+  const id=`DIE-${l.id}`;ensure(!s.lots.some(x=>x.id===id),'该批次已转换');l.status='closed';s.lots.push({...clone(l),id,quantity:command.quantity,unit:'die',stage:'Die 库存',status:'active',quality:'pending',remainingYield:0.98,remainingRoute:l.remainingRoute.filter(r=>r.name!=='晶圆测试'),promiseConfirmed:false,promisedDate:null,enteredAt:s.clock,observedAt:s.clock,parentId:l.id});
+  s.lineage.push({kind:'CP良品转换',parents:[l.id],children:[id],quantity:command.quantity,unit:'die',time:s.clock});audit(s,'晶圆测试良品入库',l.id,{dieLot:id,actualGoodDie:command.quantity});result={lotId:id};break;
+ }
  case 'release':{
   const l=find(command.lotId);const part=s.parts.find(x=>x.id===command.pn);ensure(l.stage==='Die 库存'&&l.status==='active'&&l.unit==='die'&&l.quality!=='hold','仅可对可用Die库存投料');ensure(part&&part.die===l.die&&l.compatiblePns.includes(part.id),'PN与Die或路线不兼容');ensure(positive(command.quantity)&&command.quantity<=l.quantity-l.frozen-l.unusable,'投料数量不足');
   const master=(s.routes||seed().routes).find(r=>r.id===part.routeId);ensure(master,'加工路线缺失');
@@ -133,7 +146,7 @@ export function transition(input,command){
  }
  // Explicit simulated factory/ERP events also update the mock upstream document, so the next
  // feed confirms the event. Ordinary sync never constructs upstream facts from canonical state.
- if(['expedite','receipt','ship','delivered','split','merge','pause','rework','transfer','release'].includes(command.type)&&s.sourceDocuments){
+ if(['expedite','receipt','ship','delivered','split','merge','pause','rework','transfer','release','wafer_start','wafer_test','die_receipt'].includes(command.type)&&s.sourceDocuments){
   for(const source of s.sources){
    const doc=s.sourceDocuments[source.id];
    doc.records=doc.records.filter(r=>r.entity!=='lot');
