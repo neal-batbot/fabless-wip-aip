@@ -54,6 +54,6 @@ export function sourceFixture(state,sourceId,{scenario='normal',index=state.sync
  if(state.sourceDocuments?.[sourceId])envelope.records=structuredClone(state.sourceDocuments[sourceId].records).map(r=>r.entity==='lot'?{...r,observedAt:state.clock}:r);
  if(scenario==='stale' && sourceId==='assembly') envelope.observedAt='2026-09-27T09:00:00+08:00';
  if(scenario==='delay' && sourceId==='test') envelope.records=envelope.records.map(x=>x.id==='FT-01'?{...x,promisedDate:'2026-10-12',promiseConfirmed:true,remainingRoute:route(4)}:x);
- if(scenario==='conflict' && sourceId==='test') envelope.records.push({entity:'lot',id:'FT-01',quantity:-20}, {entity:'lot',id:'UNKNOWN-LOT',pn:'UNKNOWN-PN',quantity:500});
+ if(scenario==='conflict' && sourceId==='test') {envelope.records=envelope.records.filter(r=>r.id!=='UNKNOWN-LOT'&&!(r.id==='FT-01'&&r.quantity<0));envelope.records.push({entity:'lot',id:'FT-01',quantity:-20}, {entity:'lot',id:'UNKNOWN-LOT',pn:'UNKNOWN-PN',quantity:500});}
  return envelope;
 }

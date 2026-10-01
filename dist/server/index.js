@@ -295,7 +295,10 @@ function sourceFixture(state, sourceId, { scenario = "normal", index = state.syn
   if (state.sourceDocuments?.[sourceId]) envelope.records = structuredClone(state.sourceDocuments[sourceId].records).map((r) => r.entity === "lot" ? { ...r, observedAt: state.clock } : r);
   if (scenario === "stale" && sourceId === "assembly") envelope.observedAt = "2026-09-27T09:00:00+08:00";
   if (scenario === "delay" && sourceId === "test") envelope.records = envelope.records.map((x) => x.id === "FT-01" ? { ...x, promisedDate: "2026-10-12", promiseConfirmed: true, remainingRoute: route(4) } : x);
-  if (scenario === "conflict" && sourceId === "test") envelope.records.push({ entity: "lot", id: "FT-01", quantity: -20 }, { entity: "lot", id: "UNKNOWN-LOT", pn: "UNKNOWN-PN", quantity: 500 });
+  if (scenario === "conflict" && sourceId === "test") {
+    envelope.records = envelope.records.filter((r) => r.id !== "UNKNOWN-LOT" && !(r.id === "FT-01" && r.quantity < 0));
+    envelope.records.push({ entity: "lot", id: "FT-01", quantity: -20 }, { entity: "lot", id: "UNKNOWN-LOT", pn: "UNKNOWN-PN", quantity: 500 });
+  }
   return envelope;
 }
 
@@ -1300,8 +1303,14 @@ function ingest(s, envelope) {
   ensure(Number.isFinite(Date.parse(envelope.observedAt)), "\u65E0\u6548\u6E90\u65F6\u95F4");
   ensure(Array.isArray(envelope.records) && envelope.records.length <= 1e3, "\u6BCF\u6279\u6700\u591A1000\u6761");
   const reject = (r, reason) => {
-    const id = `${envelope.eventId}:${r.id || "envelope"}:${reason}`;
-    if (!s.quarantine.some((q) => q.id === id)) s.quarantine.push({ id, entityId: r.id || source.id, sourceId: source.id, reason, observedAt: envelope.observedAt, raw: clone(r) });
+    const id = `${source.id}:${r.id || "envelope"}:${reason}`;
+    const existing = s.quarantine.find((q) => q.id === id);
+    if (existing) {
+      existing.lastSeen = s.clock;
+      existing.occurrences = (existing.occurrences || 1) + 1;
+      existing.raw = clone(r);
+      existing.eventId = envelope.eventId;
+    } else s.quarantine.push({ id, entityId: r.id || source.id, sourceId: source.id, reason, observedAt: envelope.observedAt, lastSeen: s.clock, occurrences: 1, eventId: envelope.eventId, raw: clone(r) });
   };
   if (Date.parse(envelope.observedAt) < Date.parse(source.observedAt)) {
     reject(envelope, "\u6E90\u5FEB\u7167\u5012\u9000\uFF0C\u4FDD\u7559\u53EF\u4FE1\u5FEB\u7167");

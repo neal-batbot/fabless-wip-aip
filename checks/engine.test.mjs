@@ -20,6 +20,7 @@ test('跨厂直发与普通出货使用相同分配上限',()=>{let s=initialSta
 test('冲突/未归因隔离，不覆盖可信批次；重复run不产生重复异常',()=>{
  let s=initialState();const old=s.lots.find(l=>l.id==='FT-01');s=act(s,{type:'sync',scenario:'conflict',runKey:'once'});assert.equal(s.lots.find(l=>l.id==='FT-01').quantity,old.quantity);assert.ok(s.quarantine.some(q=>q.entityId==='UNKNOWN-LOT'));
  const count=s.issues.length;const runs=s.runs.length;s=act(s,{type:'sync',scenario:'conflict',runKey:'once'});assert.equal(s.issues.length,count);assert.equal(s.runs.length,runs);
+ s=act(s,{type:'sync',scenario:'conflict',runKey:'next-run'});assert.equal(s.issues.length,count,'不同run的相同异常仍合并');
 });
 test('拆并数量守恒、暂停排除供给、跨厂流转与返工可追溯',()=>{
  let s=initialState();s=act(s,{type:'split',lotId:'AS-01',quantity:10000,childId:'AS-01-S1'});assert.equal(s.lots.filter(l=>l.id.startsWith('AS-01')).reduce((n,l)=>n+l.quantity,0),30000);

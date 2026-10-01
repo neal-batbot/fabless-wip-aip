@@ -17,7 +17,7 @@ function ingest(s,envelope){
  const source=s.sources.find(x=>x.id===envelope.sourceId);ensure(source,'未知数据源');ensure(typeof envelope.eventId==='string'&&envelope.eventId.length<200,'缺少源事件键');
  const key=`source:${source.id}:${envelope.eventId}`;if(s.seen.includes(key))return {duplicate:true,accepted:0};
  ensure(Number.isFinite(Date.parse(envelope.observedAt)),'无效源时间');ensure(Array.isArray(envelope.records)&&envelope.records.length<=1000,'每批最多1000条');
- const reject=(r,reason)=>{const id=`${envelope.eventId}:${r.id||'envelope'}:${reason}`;if(!s.quarantine.some(q=>q.id===id))s.quarantine.push({id,entityId:r.id||source.id,sourceId:source.id,reason,observedAt:envelope.observedAt,raw:clone(r)});};
+ const reject=(r,reason)=>{const id=`${source.id}:${r.id||'envelope'}:${reason}`;const existing=s.quarantine.find(q=>q.id===id);if(existing){existing.lastSeen=s.clock;existing.occurrences=(existing.occurrences||1)+1;existing.raw=clone(r);existing.eventId=envelope.eventId;}else s.quarantine.push({id,entityId:r.id||source.id,sourceId:source.id,reason,observedAt:envelope.observedAt,lastSeen:s.clock,occurrences:1,eventId:envelope.eventId,raw:clone(r)});};
  if(Date.parse(envelope.observedAt)<Date.parse(source.observedAt)){reject(envelope,'源快照倒退，保留可信快照');s.seen.push(key);return {accepted:0,rejected:envelope.records.length};}
  if(Date.parse(envelope.observedAt)>Date.parse(s.clock)+300000){reject(envelope,'源时间在未来，待核对');s.seen.push(key);return {accepted:0,rejected:envelope.records.length};}
  let accepted=0;const counts={};for(const r of envelope.records)counts[r.id]=(counts[r.id]||0)+1;
