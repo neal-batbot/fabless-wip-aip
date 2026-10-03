@@ -1,4 +1,5 @@
 import {clone,plan,anomalies,expectedUnits,addWorkdays,STAGES,dateOnly} from './planning.mjs';
+import {initAip,refreshAip,aipCommand} from './aip.mjs';
 import {seed,sourceFixture} from './seed.mjs';
 import sourceDocuments from '../mock/feeds.json' with {type:'json'};
 const ensure=(ok,msg)=>{if(!ok)throw Error(msg);};
@@ -61,9 +62,10 @@ function applyExpedite(s){
  b.remainingRoute=[{name:'被占用档期后的测试/质量/运输',queue:[3,3],duration:[3,3],confirmedStart:dateOnly(s.clock)}];b.promisedDate=addWorkdays(s.clock,6,s.calendar);b.promiseConfirmed=true;
 }
 export function transition(input,command){
- const s=clone(input);ensure(command&&typeof command.type==='string','缺少命令类型');let result={};
+ const s=clone(input);refreshAip(s);ensure(command&&typeof command.type==='string','缺少命令类型');let result={};
  const find=id=>{const l=s.lots.find(x=>x.id===id);ensure(l,'批次不存在');return l;};
- switch(command.type){
+ if(command.type.startsWith('aip_'))result=aipCommand(s,command,{expedite:applyExpedite});
+ else switch(command.type){
  case 'sync':{
   const scenario=command.scenario||'normal';ensure(['normal','delay','stale','conflict'].includes(scenario),'未知同步场景');
   const runKey=command.runKey||`manual:${s.syncIndex+1}`;const old=s.runs.find(r=>r.key===runKey);if(old&&old.status==='succeeded')return {state:s,result:{...old,duplicate:true}};
@@ -146,19 +148,19 @@ export function transition(input,command){
  }
  // Explicit simulated factory/ERP events also update the mock upstream document, so the next
  // feed confirms the event. Ordinary sync never constructs upstream facts from canonical state.
- if(['expedite','receipt','ship','delivered','split','merge','pause','rework','transfer','release','wafer_start','wafer_test','die_receipt'].includes(command.type)&&s.sourceDocuments){
+ if(['aip_reply','expedite','receipt','ship','delivered','split','merge','pause','rework','transfer','release','wafer_start','wafer_test','die_receipt'].includes(command.type)&&s.sourceDocuments){
   for(const source of s.sources){
    const doc=s.sourceDocuments[source.id];
    doc.records=doc.records.filter(r=>r.entity!=='lot');
    doc.records.push(...s.lots.filter(l=>l.sourceId===source.id).map(l=>({entity:'lot',...clone(l)})));
   }
  }
- issueRefresh(s);
+ issueRefresh(s);refreshAip(s);
  if(command.type==='sync'){
   const r=s.runs.find(r=>r.key===result.key);const p=plan(s);
   r.summary={riskOrders:p.orders.filter(o=>o.gap>0).map(o=>({id:o.id,gap:o.gap,customerId:o.customerId})),dueFollowups:s.issues.filter(i=>i.status!=='resolved'&&Date.parse(i.nextCheck)<=Date.parse(s.clock)).map(i=>i.id),forecastRemaining:p.forecasts.reduce((n,f)=>n+f.remaining,0),recommendationIds:s.recommendations.map(r=>r.id)};result=r;
  }
  return {state:s,result};
 }
-export function initialState(){const s=seed();s.sourceDocuments=clone(sourceDocuments);issueRefresh(s);return s;}
-export function snapshot(s,revision){return {state:s,revision,plan:plan(s),expedite:s.lots.find(x=>x.id==='FT-01')?.status==='active'&&s.lots.find(x=>x.id==='FT-02')?.status==='active'?previewExpedite(s):null};}
+export function initialState(){const s=seed();s.sourceDocuments=clone(sourceDocuments);issueRefresh(s);refreshAip(s);return s;}
+export function snapshot(s,revision){s=clone(s);refreshAip(s);return {state:s,revision,plan:plan(s),expedite:s.lots.find(x=>x.id==='FT-01')?.status==='active'&&s.lots.find(x=>x.id==='FT-02')?.status==='active'?previewExpedite(s):null};}

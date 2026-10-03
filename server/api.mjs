@@ -3,7 +3,9 @@ import {answerQuestion} from './agent.mjs';
 export async function api(request,db,options={}){
  const url=new URL(request.url);const json=(body,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store'}});
  try{
-  const store=new Store(db);
+  const workspace=url.searchParams.get('workspace')||'demo';
+  if(!/^(demo|scenario-[a-zA-Z0-9-]{1,80})$/.test(workspace))throw Error('无效演示空间');
+  const store=new Store(db,workspace);
   if(request.method==='GET'&&url.pathname==='/api/state')return json(await store.view());
   if(request.method==='POST'&&url.pathname==='/api/ask'){
    const origin=request.headers.get('origin');if(origin&&origin!==url.origin)return json({error:'请求来源不匹配'},403);
