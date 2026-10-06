@@ -1,5 +1,12 @@
 # 序芯 · WIP 采购运营协同工作台
 
+## ERPNext 扩展版完整方案
+
+[查看 Fabless WIP 与 AIP 基于 ERPNext 的完整验证版实施方案](docs/erpnext-implementation-plan.md)
+
+方案包含业务模型与 Ontology、WIP/AIP 同屏流程、真实 Agent 工具边界、权限与持久化、分阶段实施、mock 数据及验收标准。**这是待实现的扩展方案；当前仓库仍为现有演示系统，尚未接入 ERPNext。**
+
+
 2026-10-01 迭代：新主页为服务端持久化 WIP 协同工作台；原版静态演示保留在 `/legacy/`。下方“原版说明”只适用于旧入口。
 
 ## 当前版本
