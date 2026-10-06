@@ -2,3 +2,12 @@
 .sites-runtime/
 node_modules/
 
+# Local credentials and runtime data must not enter the public repository.
+.env
+.env.*
+!.env.example
+*.sqlite
+*.sqlite-*
+*.db
+*.pem
+*.key
